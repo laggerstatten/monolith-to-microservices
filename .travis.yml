@@ -1,16 +1,38 @@
-language: node_js
-node_js:
-  - 14
-
-
 services:
   - docker
 
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m) > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
 script:
-  - |
-    for image in reverseproxy udagram-api-user udagram-api-feed udagram-frontend; do
-      image_name="$DOCKER_USERNAME/$image"
-      docker build -t $image_name $image
-      docker tag $image_name $image_name:v1  # Tagging with version v1
-      docker push $image_name:v1
-    done
+  - docker build -t $DOCKER_USERNAME/reverseproxy ./reverseproxy
+  - docker tag $DOCKER_USERNAME/reverseproxy $DOCKER_USERNAME/reverseproxy:v1
+  - docker push $DOCKER_USERNAME/reverseproxy:v1
+
+  - docker build -t $DOCKER_USERNAME/udagram-api-user ./udagram-api-user
+  - docker tag $DOCKER_USERNAME/udagram-api-user $DOCKER_USERNAME/udagram-api-user:v1
+  - docker push $DOCKER_USERNAME/udagram-api-user:v1
+
+  - docker build -t $DOCKER_USERNAME/udagram-api-feed ./udagram-api-feed
+  - docker tag $DOCKER_USERNAME/udagram-api-feed $DOCKER_USERNAME/udagram-api-feed:v1
+  - docker push $DOCKER_USERNAME/udagram-api-feed:v1
+
+  - docker build -t $DOCKER_USERNAME/udagram-frontend ./udagram-frontend
+  - docker tag $DOCKER_USERNAME/udagram-frontend $DOCKER_USERNAME/udagram-frontend:v1
+  - docker push $DOCKER_USERNAME/udagram-frontend:v1
+
+after_success:
+  - docker tag $DOCKER_USERNAME/udagram-api-user $DOCKER_USERNAME/udagram-api-user:v2
+  - docker push $DOCKER_USERNAME/udagram-api-user:v2
+
+  - docker tag $DOCKER_USERNAME/udagram-api-feed $DOCKER_USERNAME/udagram-api-feed:v2
+  - docker push $DOCKER_USERNAME/udagram-api-feed:v2
+
+  - docker tag $DOCKER_USERNAME/reverseproxy $DOCKER_USERNAME/reverseproxy:v2
+  - docker push $DOCKER_USERNAME/reverseproxy:v2
+
+  - docker tag $DOCKER_USERNAME/udagram-frontend $DOCKER_USERNAME/udagram-frontend:v2
+  - docker push $DOCKER_USERNAME/udagram-frontend:v2
