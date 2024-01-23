@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - 14
+
+services:
+  - docker
+
+script:
+  - |
+    for image in reverseproxy udagram-api-user udagram-api-feed udagram-frontend; do
+      image_name="$DOCKER_USERNAME/$image"
+      docker build -t $image_name $image
+      docker tag $image_name $image_name:v1  # Tagging with version v1
+      docker push $image_name:v1
+    done
