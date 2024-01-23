@@ -36,3 +36,4 @@ after_success:
 
   - docker tag $DOCKER_USERNAME/udagram-frontend $DOCKER_USERNAME/udagram-frontend:v2
   - docker push $DOCKER_USERNAME/udagram-frontend:v2
+
