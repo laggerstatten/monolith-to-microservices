@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: udagram-api-user
-        image: laggerstatten/udagram-api-user
+        image: laggerstatten/udagram-api-user:v2
         ports:
         - containerPort: 8080
         env:

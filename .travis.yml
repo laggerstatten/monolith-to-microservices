@@ -22,8 +22,8 @@ script:
   - docker push $DOCKER_USERNAME/udagram-api-feed:v1
 
   - docker build -t $DOCKER_USERNAME/udagram-frontend ./udagram-frontend
-  - docker tag $DOCKER_USERNAME/udagram-frontend $DOCKER_USERNAME/udagram-frontend:v1
-  - docker push $DOCKER_USERNAME/udagram-frontend:v1
+  - docker tag $DOCKER_USERNAME/udagram-frontend $DOCKER_USERNAME/udagram-frontend:v3
+  - docker push $DOCKER_USERNAME/udagram-frontend:v3
 
 after_success:
   - docker tag $DOCKER_USERNAME/udagram-api-user $DOCKER_USERNAME/udagram-api-user:v2
@@ -35,7 +35,7 @@ after_success:
   - docker tag $DOCKER_USERNAME/udagram-reverseproxy $DOCKER_USERNAME/udagram-reverseproxy:v2
   - docker push $DOCKER_USERNAME/udagram-reverseproxy:v2
 
-  - docker tag $DOCKER_USERNAME/udagram-frontend $DOCKER_USERNAME/udagram-frontend:v2
-  - docker push $DOCKER_USERNAME/udagram-frontend:v2
+  - docker tag $DOCKER_USERNAME/udagram-frontend $DOCKER_USERNAME/udagram-frontend:v4
+  - docker push $DOCKER_USERNAME/udagram-frontend:v4
 
 

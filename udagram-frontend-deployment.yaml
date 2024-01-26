@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: udagram-frontend
-        image: laggerstatten/udagram-frontend
+        image: laggerstatten/udagram-frontend:v4
         ports:
         - containerPort: 80
         env:
